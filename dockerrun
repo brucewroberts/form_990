@@ -1,0 +1,14 @@
+#!/bin/bash
+
+set -e
+set -x
+set -o pipefail
+
+docker build --build-arg APP_ENV=dev -t dockerrun1 .
+
+export FLASK_ENV=development
+export FLASK_DEBUG=True
+export DATABASE_ENV=dev-docker
+export APP_ENV=dev
+
+docker run --env APP_ENV --env FLASK_ENV --env FLASK_DEBUG --env DATABASE_ENV -t -i -p 5000:5000 $(docker images | grep dockerrun1 | grep latest | awk '{print $3}')

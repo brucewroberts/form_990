@@ -1,0 +1,15 @@
+#!/bin/bash
+
+set -x
+set -e
+set -o pipefail
+
+. venv/bin/activate
+#pip3 install --upgrade -r requirements.txt
+
+export APP_ENV=development
+export FLASK_ENV=development
+export FLASK_DEBUG=True
+
+# $1 can be either empty or https to allow for https ngrok tunnels
+python3 -u run.py $1
